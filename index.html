@@ -1,86 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 导入字体 -->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300|Sacramento" rel="stylesheet">
-    <title>圆满</title>
-    <style>
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Sacramento';
-            background-image: url('./img/ym-bg.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            background-color: rgb(255, 230, 208);
-        }
-        .container{
-            width: 100%;
-            height: 100vh;
-        }
-        .container h1{
-            text-align: center;
-            margin-bottom: 160px;
-            padding-top: 40px;
-            font-weight: bold;
-            position: relative;
-        }   
-        .row{
-            display: grid;
-            grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-            grid-gap: 20px;
-        } 
-        .content{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0px 30px;
-            height: 50px;
-            border-radius: 10px;
-            transition: 0.4s;
-        }
-        .row a{
-            text-decoration: none;
-        }
-        .content:hover{
-            scale:0.97;
-            box-shadow: none;
-            background: pink;
-        }   
-    </style>
-</head>
-<body>
-    <div class="'container">
-        <h1>
-            💌Yuan Man💌
-        </h1>
-        <div class="row">
-            <a href="A.html" style="text-decoration: none;">
-                <div class="content">
-                    <h4>🏓混双时间轴</h4>
-                </div>
-            </a>
-            <a href="B.html" style="text-decoration: none;">
-                <div class="content">
-                    <h4>🐟王曼昱战绩</h4>
-                </div>
-            </a>
-            <a href="C.html" style="text-decoration: none;">
-                <div class="content">
-                    <h4>🐰林高远战绩</h4>
-                </div>
-            </a>
-            <a href="D.html" style="text-decoration: none;">
-                <div class="content">
-                    <h4>💬片片留言板</h4>
-                </div>
-            </a>            
-        </div>
-    </div>
-</body>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>圆满</title>
+	</head>
+	<style>
+		* {
+	/* 初始化 清除元素原有的内外边距 */
+	padding: 0;
+	margin: 0;
+}
+body {
+	overflow: hidden;
+	/* 让页面占浏览器可视区域的高度 */
+	height: 100vh;
+	background-image: url('./img/ym-bg.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-color: rgb(255, 230, 208);
+}
+.navbar {
+	/* 相对定位 */
+	position: relative;
+	/* 让元素的宽度占浏览器可视区域的宽度 */
+	width: 100vm;
+	height: 100px;
+}
+.navbar input {
+	/* 隐藏复选框 */
+	display: none;
+}
+.navbar label {
+	/* 绝对定位 */
+	position: absolute;
+	/* clac方法自动计算 让元素垂直居中 */
+	top: calc(800% - 25px);
+	right: 10px;
+	width: 50px;
+	height: 50px;
+	/* 圆角属性 */
+	border-radius: 6px;
+	/* 元素边框 */
+	border: 1px solid white;
+	background-color: rgb(255, 230, 208);
+	/* 盒子阴影 多组值用逗号隔开 */
+	box-shadow: 5px 3px 6px 1px white, -5px -3px 6px 1px #fff;
+	/* 鼠标移入变小手 */
+	cursor: pointer;
+	transition: all 0.5s ease-out;
+}
+/* 先把label元素内的两条线定义一下 */
+.navbar label::before,
+.navbar label::after {
+	content: "";
+	/* 利用两个伪元素来定义 */
+	position: absolute;
+	left: 5px;
+	width: 40px;
+	height: 4px;
+	/* 让两条更佳圆滑 */
+	border-radius: 4px;
+	background-color: white;
+	/* 收回来的动画刚好相反 */
+	transition: transform 0.3s ease-out, top 0.3s ease-out 0.3s;
+}
+/* 分别定义两条线的位置 */
+.navbar label::before {
+	top: calc(50% - 10px);
+}
+.navbar label::after {
+	top: calc(50% + 6px);
+}
+
+.navbar input:checked + label::before {
+	top: calc(50% - 2px);
+	/* 逆时针旋转45度 */
+	transform: rotate(-45deg);
+	transition: top 0.3s ease-out, transform 0.3s ease-out 0.3s;
+}
+.navbar input:checked + label::after {
+	top: calc(50% - 2px);
+	/* 顺时针旋转45度 */
+	transform: rotate(45deg);
+	/* 定义过渡效果 */
+	/* 先执行top的变化 然后在.3s后执行transform转换 ease-out是从快速到慢速的过程 */
+	transition: top 0.3s ease-out, transform 0.3s ease-out 0.3s;
+}
+/* 我们先写移动端的导航栏样式 start */
+.navbar ul {
+	position: relative;
+	top: 400px;
+	width: 100%;
+	/* 元素的不透明度 为0 就是完全透明 */
+	opacity: 0;
+	/* 让元素缩放到0 就是直接隐藏 */
+	transform: scaleY(0);
+	/* 这个属性设置元素缩放的中心点 设置到了最上面的中间位置 */
+	transform-origin: 50% 0;
+	transition: all 0.5s ease-out;
+}
+.navbar ul li {
+	list-style: none;
+	width: 100%;
+	height: 66px;
+}
+.navbar ul li a {
+	/* a标签是行内元素 不设置为块级或者行内块就没法设置宽高 */
+	display: block;
+	width: 100%;
+	height: 100%;
+	line-height: 66px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 700;
+	/* 取消文字下划线 */
+	text-decoration: none;
+	color: black;
+	border: 1px solid rgb(237, 228, 228);
+	transition: all 0.3s ease-out;
+}
+
+.navbar input:checked ~ ul {
+	opacity: 1;
+	transform: scaleY(1);
+}
+
+	</style>
+	<body>
+		<div class="navbar">
+			<input type="checkbox" id="nav" /><label for="nav"></label>
+			<ul>
+				<li><a href="PP.html" style="text-decoration: none;">🏓混双时间轴</a></li>
+				<li><a href="WMY.html" style="text-decoration: none;">🐟王曼昱战绩</a></li>
+				<li><a href="LGY.html" style="text-decoration: none;">🐰林高远战绩</a></li>
+				<li><a href="BOOK.html" style="text-decoration: none;">📖圆满国宝典</a></li>
+				<li><a href="SAY.html" style="text-decoration: none;">💬片片留言板</a></li>
+			</ul>
+		</div>
+	</body>
 </html>
