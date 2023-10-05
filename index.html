@@ -1,134 +1,454 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300|Sacramento" rel="stylesheet">
-    <title>圆满</title>
+    <title>圆满混双</title>
     <style>
-        body{
-            margin: 0;
+        * {
             padding: 0;
+            margin: 0;
+        }
+
+        .shell {
+            width: 100%;
+            position: relative;
+            padding: 80px 0;
+            transition: 0.3s ease 0s;
+            background-attachment: fixed;
+            background-size: 100%;
+        }
+
+        .shell:before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(99, 99, 99, 0.8);
+            content: "";
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .title {
+            color: #fff;
+            font-size: 46px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .timeline {
+            display: flex;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            flex-direction: column;
+            max-width: 700px;
+            position: relative;
+        }
+
+        .content-title {
+            font-weight: normal;
+            font-size: 40px;
+            margin: -10px 0 0 0;
+            transition: 0.4s;
+            padding: 0 10px;
             box-sizing: border-box;
-            background-color: rgb(255, 230, 208); 
-            font-family: 'Sacramento';
-            font-size: 30px;
+            color: #fff;
         }
-        .navbar {
-	position: absolute;
-	/* 让元素的宽度占浏览器可视区域的宽度 */
-	width: 100vm;
-	height: 100px;
-}
-.navbar input {
-	/* 隐藏复选框 */
-	display: none;
-}
-.navbar label {
-	/* 绝对定位 */
-	position: absolute;
-	width: 50px;
-	height: 50px;
-	/* 圆角属性 */
-	border-radius: 6px;
-	/* 鼠标移入变小手 */
-	cursor: pointer;
-	transition: all 0.5s ease-out;
-}
-/* 先把label元素内的两条线定义一下 */
-.navbar label::before,
-.navbar label::after {
-	content: "";
-	position: absolute;
-	left: 5px;
-	width: 40px;
-	height: 4px;
-	border-radius: 4px;
-	background-color: #042a41;
-	transition: transform 0.3s ease-out, top 0.3s ease-out 0.3s;
-}
-.navbar label::before {
-	top: calc(50% - 10px);
-}
-.navbar label::after {
-	top: calc(50% + 6px);
-}
-.navbar input:checked + label::before {
-	top: calc(50% - 2px);
-	transform: rotate(-45deg);
-	transition: top 0.3s ease-out, transform 0.3s ease-out 0.3s;
-}
-.navbar input:checked + label::after {
-	top: calc(50% - 2px);
-	transform: rotate(45deg);
-	transition: top 0.3s ease-out, transform 0.3s ease-out 0.3s;
-}
-.navbar ul {
-	position: relative;
-	top: 100px;
-	width: 100%;
-	opacity: 0;
-	transform: scaleY(0);
-	transform-origin: 50% 0;
-	transition: all 0.5s ease-out;
-}
-.navbar ul li {
-	list-style: none;
-	width: 100%;
-	height: 66px;
-}
-.navbar ul li a {
-	display: block;
-	width: 100%;
-	height: 100%;
-	line-height: 66px;
-	text-align: center;
-	font-size: 18px;
-	font-weight: 700;
-	/* 取消文字下划线 */
-	text-decoration: none;
-	color: #042a41;
-	border: 1px solid rgba(198, 217, 237, 0.3);
-	transition: all 0.3s ease-out;
-}
-.navbar input:checked ~ ul {
-	opacity: 1;
-	transform: scaleY(1);
-}
-        header{
+
+        .content-desc {
             margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: flex;
-            justify-content: center;
+            font-size: 15px;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 25px;
         }
-        .title{
-            margin: 0;
-            padding: 0;
+
+        .timeline:before {
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            margin-left: -1px;
+            content: "";
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .item {
+            padding: 40px 0;
+            opacity: 0.3;
+            filter: blur(2px);
+            transition: 0.5s;
+            box-sizing: border-box;
+            width: calc(50% - 40px);
             display: flex;
-            align-items: flex;
-            justify-content: center;
-            color: black;
+            position: relative;
+            transform: translateY(-80px);
+        }
+
+        .item:before {
+            content: attr(data-text);
+            letter-spacing: 3px;
+            width: 100%;
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            border-left: 2px solid rgba(255, 255, 255, 0.5);
+            top: 70%;
+            margin-top: -5px;
+            padding-left: 15px;
+            opacity: 0;
+            right: calc(-100% - 56px);
+            font: 900 20px '';
+            letter-spacing: 5px;
+        }
+
+        .item:nth-child(even) {
+            align-self: flex-end;
+        }
+
+        .item:nth-child(even):before {
+            right: auto;
+            text-align: right;
+            left: calc(-100% - 56px);
+            padding-left: 0;
+            border-left: none;
+            border-right: 2px solid rgba(255, 255, 255, 0.5);
+            padding-right: 15px;
+        }
+
+        .item--active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0px);
+        }
+
+        .item--active:before {
+            top: 50%;
+            transition: 0.3s all 0.2s;
+            opacity: 1;
+        }
+
+        .item--active .content-title {
+            margin: -50px 0 20px 0;
+        }
+
+        .img {
+            max-width: 100%;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            letter-spacing: 5px;
+            margin: 10px 0 0 0;
+            font-weight: normal;
+        }
+
+        .footer {
+            padding: 95px 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #999;
+            display: inline-block;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .item {
+                align-self: baseline !important;
+                width: 100%;
+                padding: 0 30px 150px 80px;
+            }
+
+            .item:before {
+                left: 10px !important;
+                padding: 0 !important;
+                top: 100px;
+                text-align: center !important;
+                width: 60px;
+                border: none !important;
+            }
+
+            .item:last-child {
+                padding-bottom: 40px;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .timeline:before {
+                left: 40px;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="navbar">
-        <input type="checkbox" id="nav" /><label for="nav"></label>
-        <ul>
-            <li><a href="PP.HTML">🏓混双时间轴</a></li>
-            <li><a href="WMY.HTML">🐟王曼昱战绩</a></li>
-            <li><a href="LGY.HTML">🐰林高远战绩</a></li>
-            <li><a href="SWEET.HTML">🍬真的磕到了</a></li>
-            <li><a href="TALK.HTML">💬片片留言板</a></li>
-        </ul>
+    <div class="shell" id="shell">
+        <div class="header">
+            <a href="index.html" style="text-decoration: none;">
+            <h2 class="title">圆满混双</h2>
+            </a>
+            <h3 class="subtitle">YUANMAN</h3>
+        </div>
+        <div class="timeline">
+            <div class="item" data-text="2018">
+                <div class="content" >
+                    <img src="./img/1.jpg" alt="" class="img" >
+                    <h2 class="content-title">韩国公开赛</h2>
+                    <p class="content-desc">
+                        第一次配混双
+                    </p>
+                </div>
+            </div>
+            <div class="item" data-text="2018">
+                <div class="content">
+                    <img src="./img/2.jpg" alt="" class="img">
+                    <h2 class="content-title">亚运会热身赛</h2>
+                    <p class="content-desc">
+                        成都热身赛
+                    </p>
+                </div>
+            </div>
+
+            <div class="item" data-text="2018">
+                <div class="content">
+                    <img src="./img/3.jpg" alt="" class="img">
+                    <h2 class="content-title">雅加达亚运会</h2>
+                    <p class="content-desc">
+                        林高远默默地在为王曼昱捏肩，
+                    </p>
+                    <p class="content-desc">
+                        高远说那时候就是想帮更早上场参加单打的王曼昱减压。
+                    </p>
+                </div>
+            </div>
+
+            <div class="item" data-text="2018">
+                <div class="content">
+                    <img src="./img/4.jpg" alt="" class="img">
+                    <h2 class="content-title">全国锦标赛</h2>
+                    <p class="content-desc">
+                        2018全国锦标赛
+                    </p>
+                </div>
+            </div>
+
+            <div class="item" data-text="2019">
+                <div class="content" >
+                    <img src="./img/5.jpg" alt="" class="img">
+                    <h2 class="content-title">全国锦标赛</h2>
+                    <p class="content-desc">
+                        "天天见，挺好的"
+                        <p class="content-desc">
+                            "俺也一样"
+                        </p>                      
+                    </p>
+                </div>
+            </div>
+            <div class="item" data-text="2019">
+                <div class="content" >
+                    <img src="./img/6.jpg" alt="" class="img">
+                    <h2 class="content-title">瑞典公开赛</h2>
+                    <p class="content-desc">
+                        "怎么分配自己的体力精力" 
+                        <p class="content-desc">
+                            "你怎么分配我怎么分配"
+                        </p>                      
+                    </p>
+                </div>
+            </div>
+
+            <div class="item" data-text="2020">
+                <div class="content">
+                    <img src="./img/7.jpg" alt="" class="img">
+                    <h2 class="content-title">地表最强</h2>
+                    <p class="content-desc">
+                        2020地表最强
+                    </p>
+                </div>
+            </div>
+
+            <div class="item" data-text="2021">
+                <div class="content" >
+                    <img src="./img/8.jpg" alt="" class="img">
+                    <h2 class="content-title">休斯顿世乒赛</h2>
+                    <p class="content-desc">
+                        "见证一个历史的时刻吧，我觉得自己很荣幸"
+                    </p>
+                    <p class="content-desc">
+                        "争取在休斯顿能成为一个历史吧，我们的故事成为历史"
+                    </p>
+                </div>
+            </div>
+
+            <div class="item" data-text="2022">
+                <div class="content">
+                    <img src="./img/9.jpg" alt="" class="img">
+                    <h2 class="content-title">澳门冠军赛</h2>
+                    <p class="content-desc">
+                        "咱也没退出江湖啊" 
+                        <p class="content-desc">
+                            "昱，别怕"
+                        </p>                     
+                    </p>
+                </div>
+            </div>
+            <div class="item" data-text="2022">
+                <div class="content">
+                    <img src="./img/10.jpg" alt="" class="img">
+                    <h2 class="content-title">全国锦标赛</h2>
+                    <p class="content-desc">
+                        金牌获奖者
+                        <p class="content-desc">
+                            广东队林高远，黑龙江银河王曼昱
+                        </p>                      
+                    </p>
+                </div>
+            </div> 
+            <div class="item" data-text="2023">
+                <div class="content">
+                    <img src="./img/11.jpg" alt="" class="img">
+                    <h2 class="content-title">卡塔尔选拔赛</h2>
+                    <p class="content-desc">
+                        "哼，不看"
+                    </p>
+                </div>
+            </div>
+            
+            <div class="item" data-text="2023">
+                <div class="content">
+                    <img src="./img/12.jpg" alt="" class="img">
+                    <h2 class="content-title">球星挑战赛</h2>
+                    <p class="content-desc">
+                        "打起来这种感觉还是比较舒服吧"                    
+                    </p>
+                </div>
+            </div>     
+        </div>
     </div>
-    <header>
-        <img src="./img/ym-bg.jpg" >
-    </header>
-    <div class="title">
-            <h1>YuanMan</h1>
-        </a>  
-    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+
+        (function ($) {
+            $.fn.timeline = function () {
+                var selectors = {
+                    id: $(this),
+                    item: $(this).find(".item"),
+                    activeClass: "item--active",
+                    img: ".img"
+                };
+                // 将第一个时间轴项目激活，并设置时间轴背景图片为第一个项目的图片
+                selectors.item.eq(0).addClass(selectors.activeClass);
+                selectors.id.css(
+                    "background-image",
+                    "url(" +
+                    selectors.item.first()
+                        .find(selectors.img)
+                        .attr("src") +
+                    ")"
+                );
+                // 获取时间轴项目的总数
+                var itemLength = selectors.item.length;
+                // 当页面滚动时，触发滚动事件
+                $(window).scroll(function () {
+                    var max, min;
+                    // 获取页面滚动的距离
+                    var pos = $(this).scrollTop();
+                    selectors.item.each(function (i) {
+                        // 获取当前时间轴项目的最小和最大高度
+                        min = $(this).offset().top;
+                        max = $(this).height() + $(this).offset().top;
+                        var that = $(this);
+                        // 如果滚动到最后一个项目，并且超过了当前项目高度的一半，
+                        // 则将最后一个项目设置为激活状态，并设置背景图片为最后一个项目的图片
+                        if (i == itemLength - 2 && pos > min + $(this).height() / 2) {
+                            selectors.item.removeClass(selectors.activeClass);
+                            selectors.id.css(
+                                "background-image",
+                                "url(" +
+                                selectors.item.last()
+                                    .find(selectors.img)
+                                    .attr("src") +
+                                ")"
+                            );
+                            selectors.item.last().addClass(selectors.activeClass);
+                        }
+                        // 如果当前滚动位置在当前项目的最小和最大高度之间，
+                        // 则将当前项目设置为激活状态，并设置背景图片为当前项目的图片
+                        else if (pos <= max - 10 && pos >= min) {
+                            selectors.id.css(
+                                "background-image",
+                                "url(" +
+                                $(this)
+                                    .find(selectors.img)
+                                    .attr("src") +
+                                ")"
+                            );
+                            selectors.item.removeClass(selectors.activeClass);
+                            $(this).addClass(selectors.activeClass);
+                        }
+                    });
+                });
+            };
+        })(jQuery)
+        /*
+        最后，我们调用 timeline 插件并传入时间轴的 ID 作为参数。
+        这将启用时间轴插件并为该时间轴绑定滚动事件。
+        */
+        $("#shell").timeline();
+
+
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
+
 </html>
